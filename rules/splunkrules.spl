@@ -1,3 +1,3 @@
-index=windows sourcetype=WinEventLog EventCode=4625 
+index="localog" sourcetype="auth-too_small" 
 | stats count by user, src_ip 
 | where count > 5
