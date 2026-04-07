@@ -1,3 +1,0 @@
-index="localog" sourcetype="auth-too_small" 
-| stats count by user, src_ip 
-| where count > 5
