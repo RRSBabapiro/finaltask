@@ -1,0 +1,29 @@
+name: Splunk Rule Deployer
+
+on:
+  push:
+    paths:
+      - 'splunkrules/**'  # Yalnız bu qovluqda dəyişiklik olanda işləsin
+      - 'deploy_rules.py' # Skriptin özü dəyişəndə də işləsin
+
+jobs:
+  splunk_sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodu kopyala
+        uses: actions/checkout@v3
+
+      - name: Python-u quraşdır
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Kitabxanaları yüklə
+        run: pip install pyyaml requests
+
+      - name: Skripti işə sal və Splunka göndər
+        env:
+          # GitHub Secrets-dən gələn məlumatlar bura ötürülür
+          SPLUNK_TOKEN: ${{ secrets.SPLUNK_TOKEN }}
+          SPLUNK_URL: "https://YOUR_STACK.splunkcloud.com:8089"
+        run: python deploy_rules.py
