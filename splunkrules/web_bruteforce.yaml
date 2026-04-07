@@ -1,32 +1,5 @@
-# Splunk Real-Time Alert Rule (Updated Threshold: 10)
-name: "Real-time Website Bruteforce Detection"
-id: "rt_web_bruteforce_001"
-description: "Canlı rejimdə /api/login uğursuzluqlarını izləyir. 10-dan çox cəhd olduqda Telegram bildirişi göndərir."
-author: "Sənin Adın"
-
-# Əsas SPL sorğusu (failure_count > 10 olaraq dəyişdirildi)
-search: |
-  index="webserver" sourcetype="_json" path="/api/login" status_code=401
-  | stats count as failure_count by client_ip
-  | where failure_count > 10
-
-# Zamanlama (Real-time rejimi)
-scheduling:
-  is_scheduled: 0             
-  dispatch_as: "user"
-  earliest_time: "rt"         
-  latest_time: "rt"           
-
-# Alert Tənzimləmələri
-alert:
-  type: "real-time"
-  trigger_condition: "per result"  
-  severity: "critical"
-
-# Skript Tətiyi (Action)
-actions:
-  script:
-    enabled: true
-    filename: "telegram_alert.sh" 
-
-# Throttling yoxdur: Hər yeni uğursuz cəhddə (10-u keçdikdən sonra) mesaj gələcək.
+name: "Website_Bruteforce_Report"
+search: 'index="webserver" sourcetype="_json" path="/api/login" status_code=401 | stats count as failure_count by client_ip | where failure_count > 10'
+earliest_time: "0"
+latest_time: "now"
+description: "Bütün vaxtlar üçün Brute Force hesabatı"
