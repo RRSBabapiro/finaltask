@@ -1,5 +1,0 @@
-name: "Website_Bruteforce_Report"
-search: 'index="webserver" sourcetype="_json" path="/api/login" status_code=401 | stats count as failure_count by client_ip | where failure_count > 10'
-earliest_time: "0"
-latest_time: "now"
-description: "Bütün vaxtlar üçün Brute Force hesabatı"
