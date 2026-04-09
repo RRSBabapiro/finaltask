@@ -1,0 +1,10 @@
+name: "SQL_Injection_Detection"
+search: |
+  index="webserver"
+  | eval decoded_uri = urldecode(uri)
+  | where match(decoded_uri, "(?i)union\s+select|select\s+.*\s+from|insert\s+into|update\s+.*\s+set|delete\s+from|drop\s+table|convert\s*\(|cast\s*\(|db_name|host_name|@@version|waitfor\s+delay|sleep\(|pg_sleep\(|or\s+['\d]+=['\d]+|--|#")
+  | where match(decoded_uri, "^/") AND NOT match(decoded_uri, "\\x")
+  | table _time, clientip, decoded_uri, statuscode, useragent
+earliest_time: "0"
+latest_time: "now"
+description: "Web server loqlarında SQL Injection hücumlarını aşkarlayır."
