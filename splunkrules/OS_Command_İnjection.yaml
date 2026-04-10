@@ -1,0 +1,10 @@
+name: "OS_Command_Injection_Detection"
+search: |
+  index="webserver"
+  | eval cmd_dec = urldecode(urldecode(uri))
+  | where match(cmd_dec, "(?i)(;|&&|\|\||`|\$\()\s*(wget|curl|python|perl|bash|sh|chmod|chown|whoami|cat|type|dir|ls|ipconfig|ifconfig|id|uname|net\s+user|powershell)")
+  | where NOT match(cmd_dec, "\\x")
+  | table _time, clientip, cmd_dec, statuscode, useragent
+earliest_time: "0"
+latest_time: "now"
+description: "Real OS command injeksiyalarını aşkar edir"
