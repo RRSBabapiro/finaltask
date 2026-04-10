@@ -1,0 +1,11 @@
+name: "XSS_Detection"
+search: |
+  index="webserver"
+  | eval decoded_payload = urldecode(urldecode(uri))
+  | where match(decoded_payload, "(?i)<(script|iframe|svg|img|body|details|audio|video|input|object|embed)\b|on\w+\s*=|javascript:|alert\(|confirm\(|prompt\(|eval\(|document\.(cookie|write|location)|atob\(|String\.fromCharCode")
+  | where NOT match(decoded_payload, "(?i)XDEBUG_SESSION_START|wget|curl|chmod|chown|/ping\.cgi|/bin/sh|/bin/bash")
+  | where NOT match(decoded_payload, "\\x")
+  | table _time, clientip, decoded_payload, statuscode, useragent
+earliest_time: "0"
+latest_time: "now"
+description: "Rule XSS hücumlarını təyin edir"
