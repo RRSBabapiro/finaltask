@@ -1,0 +1,14 @@
+name: "Sensitive_File_and_Config_Access_Detection"
+description: "Sistem konfiqurasiyaları (.env, .git), ehtiyat nüsxələr (.bak, .sql) və kritik idarəetmə fayllarına daxil olma cəhdlərini aşkar edir."
+tags:
+  - "OWASP A05:2021"
+  - "Security Misconfiguration"
+
+search: |
+  index="webserver"
+  | eval request_path = urldecode(urldecode(uri))
+  | where match(request_path, "(?i)\.(env|git|ssh|htaccess|htpasswd|bash_history|sql|bak|swp|old|log)$|config\.php|wp-config\.php|web\.config|phpinfo|metadata|/etc/passwd")
+  | table _time, clientip, request_path, statuscode, useragent
+
+earliest_time: "0"
+latest_time: "now"
