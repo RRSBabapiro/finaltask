@@ -1,0 +1,14 @@
+name: "Path_Traversal_LFI_Detection"
+description: "Qovluqlardan yuxarı qalxaraq (../../) sistem fayllarına daxil olma cəhdlərini aşkar edir."
+tags:
+  - "OWASP A01:2021"
+  - "Broken Access Control"
+
+search: |
+  index="webserver"
+  | eval decoded_uri = urldecode(urldecode(uri))
+  | where match(decoded_uri, "(?i)\.\./\.\.|\.\.\\\.\.\\|/etc/passwd|/etc/shadow|/etc/group|/windows/win.ini|/boot\.ini")
+  | table _time, clientip, decoded_uri, statuscode, useragent
+
+earliest_time: "0"
+latest_time: "now"
