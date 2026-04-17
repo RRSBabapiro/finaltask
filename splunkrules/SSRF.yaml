@@ -1,0 +1,13 @@
+name: "SSRF_Based_Detection"
+description: "Serverin daxili IP ünvanlarına (localhost, 10.x, 192.168.x) və ya bulud metadata IP-sinə (169.254.169.254) müraciət cəhdlərini aşkar edir."
+tags:
+  - "OWASP A10:2021"
+  - "Server-Side Request Forgery"
+search: |
+  index="webserver"
+  | eval payload = urldecode(urldecode(uri))
+  | where match(payload, "(?i)169\.254\.169\.254|127\.0\.0\.1|localhost|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}")
+  | table _time, clientip, payload, statuscode, useragent
+
+earliest_time: "0"
+latest_time: "now"
