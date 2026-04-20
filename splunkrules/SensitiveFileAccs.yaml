@@ -5,9 +5,9 @@ tags:
   - "Security Misconfiguration"
 
 search: |
- index="webserver"
-  | where match(request_path, "(?i)/etc/passwd|/etc/shadow|/etc/group|/windows/win.ini|/boot\.ini|\.ssh/id_rsa|\.bash_history")
-  | table _time, clientip, request_path, statuscode, useragent
+    index="webserver"
+      | where match(request_path, "(?i)/etc/passwd|/etc/shadow|/etc/group|/windows/win.ini|/boot\.ini|\.ssh/id_rsa|\.bash_history")
+      | table _time, clientip, request_path, statuscode, useragent
 
 earliest_time: "0"
 latest_time: "now"
