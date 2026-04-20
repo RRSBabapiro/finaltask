@@ -4,9 +4,9 @@ tags:
   - "OWASP A10:2021"
   - "Server-Side Request Forgery"
 search: |
-   index="webserver"
- | where match(request_path, "(?i)169\.254\.169\.254|127\.0\.0\.1|localhost|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}")
- | table _time, clientip, request_path, statuscode, useragent
+     index="webserver"
+       | where match(request_path, "(?i)169\.254\.169\.254|127\.0\.0\.1|localhost|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}")
+       | table _time, clientip, request_path, statuscode, useragent
 
 earliest_time: "0"
 latest_time: "now"
