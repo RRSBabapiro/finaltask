@@ -1,0 +1,14 @@
+name: "Administrative_SQLi_Detection"
+description: "Bazanı silmə (DROP), dəyişmə (ALTER), məlumatları məhv etmə (DELETE) və sistem məlumatlarını (@@VERSION) ələ keçirmə cəhdlərini aşkar edir."
+tags:
+  - "OWASP A03:2021"
+  - "Destructive SQLi"
+  - "Database Security"
+
+search: |
+      index="webserver"
+       | where match(request_path, "(?i)DROP\s+TABLE|DELETE\s+FROM|UPDATE\s+.*\s+SET|ALTER\s+TABLE|TRUNCATE\s+TABLE|@@VERSION|DATABASE\(|USER\(\)")
+       | table _time, clientip, request_path, statuscode
+
+earliest_time: "0"
+latest_time: "now"
