@@ -7,21 +7,21 @@ tags:
 "Discovery"
 
 search: |
-       index="tpot" sourcetype="eve.json" event_type="smb"
-          | spath path="smb.client_dialects{}" output=dialects
-          | stats 
-              count as event_count, 
-              dc(src_port) as unique_source_ports, 
-              values(dialects) as attempted_dialects 
-              by src_ip
-          | eval attack_method = case(
-             unique_source_ports > 50, "High-Speed Scanner (Botnet)",
-             unique_source_ports > 5, "Automated Tool / Script",
-             1=1, "Targeted / Stealthy Probe"
-             )
-          | where event_count > 10
-          | sort - event_count
-          | table src_ip, attack_method, unique_source_ports, attempted_dialects, event_count
+  index="tpot" sourcetype="eve.json" event_type="smb"
+  | spath path="smb.client_dialects{}" output=dialects
+  | stats 
+      count as event_count, 
+      dc(src_port) as unique_source_ports, 
+      values(dialects) as attempted_dialects 
+      by src_ip
+  | eval attack_method = case(
+      unique_source_ports > 50, "High-Speed Scanner (Botnet)",
+      unique_source_ports > 5, "Automated Tool / Script",
+      1=1, "Targeted / Stealthy Probe"
+      )
+  | where event_count > 10
+  | sort - event_count
+  | table src_ip, attack_method, unique_source_ports, attempted_dialects, event_count
 
 earliest_time: "0"
 latest_time: "now"
