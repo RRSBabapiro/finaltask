@@ -6,9 +6,8 @@ tags:
 
 search: |
   index="webserver"
-  | eval decoded_uri = urldecode(urldecode(uri))
-  | where match(decoded_uri, "(?i)\.\./\.\.|\.\.\\\.\.\\|/etc/passwd|/etc/shadow|/etc/group|/windows/win.ini|/boot\.ini")
-  | table _time, clientip, decoded_uri, statuscode, useragent
+   | where match(request_path, "(?i)\.\./\.\.|\.\.\\\.\.\\|/etc/passwd|/etc/shadow|/etc/group|/windows/win.ini|/boot\.ini")
+   | table _time, clientip, request_path, statuscode, useragent
 
 earliest_time: "0"
 latest_time: "now"
