@@ -1,0 +1,14 @@
+name: "Blind_and_Time_Based_SQLi_Detection"
+description: "Serveri zamana bağlı gecikmələrə məcbur edən Time-based və Boolean-based SQL injeksiya cəhdlərini aşkar edir."
+tags:
+  - "OWASP A03:2021"
+  - "Blind SQL Injection"
+  - "SQLi"
+
+search: |
+     index="webserver"
+       | where match(request_path, "(?i)WAITFOR\s+DELAY|SLEEP\(\d+\)|PG_SLEEP\(|BENCHMARK\(|OR\s+['\d]+=['\d]+|AND\s+['\d]+=['\d]+")
+       | table _time, clientip, request_path, statuscode
+
+earliest_time: "0"
+latest_time: "now"
