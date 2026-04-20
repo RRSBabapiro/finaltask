@@ -1,0 +1,23 @@
+name: "WAF_Top_Attacker_Summary"
+description: "WAF loqlarını analiz edərək ən çox sorğu göndərən və fərqli resursları hədəf alan ilk 20 IP ünvanını ümumiləşdirir."
+tags:
+  - "Reconnaissance"
+  - "WAF_Monitoring"
+  - "Threat_Hunting"
+
+search: |
+  index="waf"
+  | spath
+  | stats 
+      count as total_hits, 
+      dc(resource_path) as unique_targets, 
+      values(resource_path) as top_targets, 
+      first(request_country_name) as country,
+      first(http_user_agent) as user_agent
+      by remote_addr
+  | sort - total_hits
+  | head 20
+  | table remote_addr, country, total_hits, unique_targets, top_targets, user_agent
+
+earliest_time: "0"
+latest_time: "now"
