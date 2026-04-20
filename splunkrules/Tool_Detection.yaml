@@ -1,0 +1,12 @@
+name: "Critical_Hacking_Tool_Detection"
+description: "Yalnız ən təhlükəli skanerləri və hücum alətlərini (Sqlmap, Nikto, Nmap, Hydra) aşkar edir. Boş yollar təmizlənib."
+tags:
+  - "Critical_Alert"
+  - "Exploitation_Tools"
+  - "T1595"
+
+search: |
+  index="webserver"
+  | where len(trim(request_path)) > 1
+  | where match(useragent, "(?i)sqlmap|nikto|dirbuster|gobuster|nmap|masscan|hydra|acunetix|nessus|havij|burp|zgrab|cloudmapping|openvas")
+  | table _time, clientip, useragent, request_path, statuscode
