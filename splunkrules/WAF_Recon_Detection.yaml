@@ -1,0 +1,24 @@
+name: "Aggressive_WAF_Reconnaissance_Detection"
+description: "10 dəqiqə ərzində eyni IP-dən gələn 100-dən çox bloklanmış sorğunu və 10-dan çox fərqli resursun hədəf alınmasını (kəşfiyyat) aşkarlayır."
+tags:
+  
+"OWASP A01:2021"
+"Reconnaissance"
+"WAF_Monitoring"
+"Sucuri_Logs"
+
+search: |
+    index="waf" sucuri_is_blocked="true"
+      | bucket _time span=10m
+      | stats 
+         count as total_hits, 
+         dc(resource_path) as unique_targets, 
+         values(request_country_name) as source_country 
+         by remote_addr, _time
+      | where total_hits > 100 AND unique_targets > 10
+      | sort - total_hits
+
+earliest_time: "-24h"
+latest_time: "now"
+cron_schedule: "/10 * * *"
+scheduling: "real-time"
