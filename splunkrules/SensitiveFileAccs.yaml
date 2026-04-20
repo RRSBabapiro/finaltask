@@ -5,9 +5,8 @@ tags:
   - "Security Misconfiguration"
 
 search: |
-  index="webserver"
-  | eval request_path = urldecode(urldecode(uri))
-  | where match(request_path, "(?i)\.(env|git|ssh|htaccess|htpasswd|bash_history|sql|bak|swp|old|log)$|config\.php|wp-config\.php|web\.config|phpinfo|metadata|/etc/passwd")
+ index="webserver"
+  | where match(request_path, "(?i)/etc/passwd|/etc/shadow|/etc/group|/windows/win.ini|/boot\.ini|\.ssh/id_rsa|\.bash_history")
   | table _time, clientip, request_path, statuscode, useragent
 
 earliest_time: "0"
