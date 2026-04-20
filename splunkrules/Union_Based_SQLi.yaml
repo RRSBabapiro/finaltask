@@ -1,0 +1,8 @@
+name: "Union_based_SQL_Injection_Detection"
+search: |
+      index="webserver"
+       | where match(request_path, "(?i)UNION\s+ALL?\s+SELECT|SELECT\s+.*\s+FROM|ORDER\s+BY\s+\d+|GROUP\s+CONCAT")
+       | table _time, clientip, request_path, statuscode
+earliest_time: "0"
+latest_time: "now"
+description: "Web server loqlarında Union based SQL Injection hücumlarını aşkarlayır."

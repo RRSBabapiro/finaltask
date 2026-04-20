@@ -1,8 +1,0 @@
-name: "SQL_Injection_Detection"
-search: |
-  index="webserver" sourcetype="access_combined"
-  | where match(request_path, "(?i)\b(UNION\s+ALL?\s+SELECT|SELECT\s+.*\s+FROM|INSERT\s+INTO|UPDATE\s+.*\s+SET|DELETE\s+FROM|DROP\s+TABLE|ALTER\s+TABLE)\b|(?i)OR\s+['\d]+=['\d]+|(?i)AND\s+['\d]+=['\d]+|(?i)WAITFOR\s+DELAY|(?i)SLEEP\(\d+\)|(?i)PG_SLEEP\(|(?i)DATABASE\(|(?i)@@VERSION")
-  | table _time, clientip, request_path, statuscode, useragent
-earliest_time: "0"
-latest_time: "now"
-description: "Web server loqlarında SQL Injection hücumlarını aşkarlayır."
