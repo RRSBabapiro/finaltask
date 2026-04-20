@@ -1,0 +1,14 @@
+name: "API_High_Frequency_Request_Detection"
+description: "Bir IP-dən eyni resursa saniyədə 3-dən çox sorğu gəlməsini (Rate Limiting bypass və ya Bruteforce cəhdi) aşkar edir."
+tags:
+  - "DDoS_Detection"
+  - "Rate_Limiting"
+  - "Brute_Force"
+
+search: |
+  index="webserver" source="http:webserver" sourcetype="_json"
+  | bin _time span=1s
+  | stats count as requests_per_second by clientip, request_path, useragent
+  | where requests_per_second > 3
+  | eval alert_type="High Frequency API Request", severity="medium"
+  | table _time, clientip, requests_per_second, request_path, useragent
