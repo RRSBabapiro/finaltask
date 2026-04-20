@@ -1,0 +1,21 @@
+name: "Protocol_Anomaly_and_Egress_Risk_Detection"
+description: "Suricata tərəfindən aşkar edilən protokol uyğunsuzluqlarını (anomaly) izləyir."
+tags:
+  - "MITRE T1071"
+  - "Protocol Anomaly"
+  - "Egress Monitoring"
+
+search: |
+  index="tpot" sourcetype="eve.json" event_type="anomaly"
+  | stats 
+      count as anomaly_count, 
+      values(anomaly.type) as anomaly_type, 
+      values(anomaly.event) as event_details, 
+      values(anomaly.app_proto) as affected_protocol 
+      by src_ip, dest_ip, dest_port
+  | eval risk_direction = if(src_ip="161.35.47.184" OR src_ip="192.168.80.2", "OUTBOUND - CRITICAL", "INBOUND - MEDIUM")
+  | sort - anomaly_count
+  | table src_ip, dest_ip, dest_port, affected_protocol, anomaly_type, event_details, risk_direction
+
+earliest_time: "0"
+latest_time: "now"
