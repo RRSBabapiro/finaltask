@@ -6,7 +6,7 @@ tags:
   - "Discovery"
 
 search: |
-  index="tpot" sourcetype="eve.json" event_type="smb"
+  index="t-pot" sourcetype="eve.json" event_type="smb"
   | spath path="smb.client_dialects{}" output=dialects
   | stats
       count as event_count,
