@@ -1,0 +1,7 @@
+name: "SOC - New Local User Account Created (ID 4720)"
+description: "Windows sistemlərində yeni bir lokal istifadəçi hesabı yaradıldıqda dərhal Offense yaradır. Bu, hücumçunun sistemdə qalıcı olmaq (persistence) cəhdini göstərə bilər."
+expression: "SELECT \"Target UserName\", \"Subject UserName\", sourceip FROM events WHERE eventid = 4720"
+severity: 8
+credibility: 5
+offense_response: true
+offense_column: "Username"
