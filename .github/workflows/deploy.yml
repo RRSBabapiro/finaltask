@@ -1,14 +1,14 @@
-name: Splunk Rule Deployer
+name: SIEM Rule Deployer
 
 on:
   push:
     paths:
       - 'splunkrules/**'
-      - 'deploy_rules.py'
-  workflow_dispatch: # Əllə işə salmaq üçün düymə yaradır
+      - 'qradarrules/**'
+  workflow_dispatch:
 
 jobs:
-  splunk_sync:
+  deploy_all:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -22,9 +22,16 @@ jobs:
       - name: Install Dependencies
         run: pip install pyyaml requests
 
-      - name: Run Deploy Script
+      # SPLUNK DEPLOY
+      - name: Deploy to Splunk
         env:
           SPLUNK_TOKEN: ${{ secrets.SPLUNK_TOKEN }}
-          # Sənin AWS IP-n və Management Portu
-          SPLUNK_URL: "https://13.63.91.217:8089" 
+          SPLUNK_URL: "https://13.63.91.217:8089"
         run: python deploy_rules.py
+
+      # QRADAR DEPLOY
+      - name: Deploy to QRadar
+        env:
+          QRADAR_TOKEN: ${{ secrets.QRADAR_TOKEN }}
+          QRADAR_URL: "https://13.63.178.39" # Sənin QRadar IP-n
+        run: python deploy_qradar.py
