@@ -1,0 +1,3 @@
+name: "Bruteforce_Detection_AQL"
+expression: "SELECT sourceip, count(*) FROM events WHERE qid=2000051 GROUP BY sourceip HAVING count(*) > 5"
+enabled: true
