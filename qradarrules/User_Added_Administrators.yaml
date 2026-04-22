@@ -1,0 +1,9 @@
+name: "SOC - User Added to Admin Group"
+description: "Windows/AD mühitində kritik qruplara (Admin) istifadəçi əlavə edildikdə dərhal Offense yaradır. Bu qayda GitHub Deployment Engine vasitəsilə tətbiq edilib."
+expression: "SELECT \"Target UserName\", \"Subject UserName\", sourceip FROM events WHERE qid IN (5002946, 5002738, 5002233) AND \"Group Name\" ILIKE '%Administrator%'"
+severity: 9
+credibility: 7
+relevance: 7
+offense_response: true
+offense_column: "sourceip"
+dispatch_event: "SOC Alert - Admin Group Membership Change"
