@@ -1,3 +1,6 @@
-name: "Bruteforce_Detection_AQL"
-expression: "SELECT sourceip, count(*) FROM events WHERE qid=2000051 GROUP BY sourceip HAVING count(*) > 5"
-enabled: true
+name: "GitHub - Brute Force Detection (Windows)"
+description: "Eyni mənbədən qısa müddətdə 10-dan çox uğursuz giriş cəhdi olduqda Offense yaradır."
+expression: "SELECT sourceip, count(*) as FailCount FROM events WHERE qid = 5000842 GROUP BY sourceip HAVING FailCount > 10"
+severity: 7
+credibility: 4
+offense_response: true
