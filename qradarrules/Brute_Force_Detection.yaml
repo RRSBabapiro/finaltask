@@ -1,0 +1,9 @@
+name: "Brute Force Detection"
+description: "Windows sistemlərində 1 dəqiqə ərzində 5 və ya daha çox uğursuz giriş cəhdi (Event ID 4625) aşkar edildikdə dərhal Offense yaradır."
+expression: "SELECT sourceip, count(*) as LoginFailures FROM events WHERE eventid = 4625 GROUP BY sourceip HAVING LoginFailures >= 5 LAST 1 MINUTES"
+severity: 7
+credibility: 7
+relevance: 7
+offense_response: true
+offense_column: "Username"
+dispatch_event: "SOC Alert - Brute Force Attempt Detected"
