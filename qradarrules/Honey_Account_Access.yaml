@@ -1,0 +1,9 @@
+name: "Unauthorized Access to Honey Account (sqladmin)"
+description: "Xüsusi izlənilən Honey Account-a (sqladmin) giriş cəhdlərini aşkarlayır."
+expression: "SELECT \"Target UserName\", sourceip FROM events WHERE eventid IN (4624, 4625) AND \"Target UserName\" = 'sqladmin'"
+severity: 9
+credibility: 9
+relevance: 10
+offense_response: true
+offense_column: "sourceip"
+dispatch_event: "SOC Alert - HONEYPOT ACCOUNT ACCESS"
