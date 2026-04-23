@@ -1,0 +1,9 @@
+name: "Security Log Clear"
+description: "Windows Security loglarının təmizlənməsini aşkarlayır. Bu, hücumdan sonra izlərin silinməsi əlamətidir."
+expression: "SELECT sourceip, logsourceid FROM events WHERE eventid = 1102"
+severity: 10
+credibility: 8
+relevance: 10
+offense_response: true
+offense_column: "sourceip"
+dispatch_event: "SOC Alert - AUDIT LOG CLEARED"
