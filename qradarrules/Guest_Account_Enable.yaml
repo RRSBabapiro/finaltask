@@ -1,0 +1,9 @@
+name: "Guest account enable"
+description: "Sistemdə söndürülmüş Guest (Qonaq) hesabının aktivləşdirilməsini izləyir (Event ID 4722)."
+expression: "SELECT \"Target UserName\", sourceip FROM events WHERE eventid = 4722 AND \"Target UserName\" = 'Guest'"
+severity: 7
+credibility: 7
+relevance: 7
+offense_response: true
+offense_column: "sourceip"
+dispatch_event: "SOC Alert - Guest Account Enabled"
