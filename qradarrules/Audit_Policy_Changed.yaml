@@ -1,0 +1,9 @@
+name: "Audit policy changed"
+description: "Sistemin audit siyasətində (loqlama qaydalarında) baş verən dəyişiklikləri izləyir (Event ID 4719)."
+expression: "SELECT sourceip, \"Policy Change\", \"Subject UserName\" FROM events WHERE eventid = 4719"
+severity: 9
+credibility: 6
+relevance: 10
+offense_response: true
+offense_column: "sourceip"
+dispatch_event: "SOC Alert - Security Audit Policy Tampered"
