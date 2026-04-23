@@ -1,0 +1,9 @@
+name: "User added to sensitive groups"
+description: "İstifadəçinin Reference Set-də qeyd olunan həssas qruplardan birinə əlavə edilməsini izləyir (Event ID 4728, 4732, 4756)."
+expression: "SELECT \"Target UserName\", \"Group Name\", sourceip FROM events WHERE eventid IN (4728, 4732, 4756) AND LOOKUP('Sensitive_Groups_List', \"Group Name\") IS NOT NULL"
+severity: 8
+credibility: 7
+relevance: 9
+offense_response: true
+offense_column: "Target UserName"
+dispatch_event: "SOC Alert - Sensitive Group Membership Change"
