@@ -1,0 +1,9 @@
+name: "Persistence Scheduled Task"
+description: "Sistemdə yeni bir planlaşdırılmış tapşırıq yaradıldıqda Offense yaradır (Event ID 4698)."
+expression: "SELECT \"Task Name\", \"Command\", sourceip FROM events WHERE eventid = 4698"
+severity: 7
+credibility: 5
+relevance: 8
+offense_response: true
+offense_column: "sourceip"
+dispatch_event: "SOC Alert - Persistence via Scheduled Task"
