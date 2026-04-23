@@ -1,0 +1,9 @@
+name: "Certutil Download Activity"
+description: "Certutil aləti vasitəsilə internetdən fayl yükləmə cəhdini izləyir (Living off the Land)."
+expression: "SELECT sourceip, payload FROM events WHERE eventid = 4688 AND payload IMATCHES '(?i)certutil\\.exe.*-urlcache'"
+severity: 8
+credibility: 7
+relevance: 9
+offense_response: true
+offense_column: "sourceip"
+dispatch_event: "SOC Alert - Certutil Suspicious Download"
