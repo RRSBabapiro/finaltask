@@ -1,0 +1,9 @@
+name: "PowerShell Encoded Command Detected"
+description: "Gizlədilmiş (Encoded) PowerShell komandalarının işə düşməsini aşkarlayır (Event ID 4688)."
+expression: "SELECT sourceip, payload FROM events WHERE eventid = 4688 AND (payload ILIKE '%-enc%' OR payload ILIKE '%-EncodedCommand%' OR payload ILIKE '%-encoded%')"
+severity: 8
+credibility: 6
+relevance: 9
+offense_response: true
+offense_column: "sourceip"
+dispatch_event: "SOC Alert - Suspicious Encoded PowerShell"
